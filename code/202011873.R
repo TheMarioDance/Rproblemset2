@@ -15,8 +15,8 @@ getwd()
 require(pacman)
 
 
-#uso la funci?n p_load de pacman para instalar/llamar las librerias que se usaran en el problem set
-p_load(rio, # funci?n import/export: permite leer/escribir archivos desde diferentes formatos. 
+#uso la funcion p_load de pacman para instalar/llamar las librerias que se usaran en el problem set
+p_load(rio, # funcion import/export: permite leer/escribir archivos desde diferentes formatos. 
        skimr, # funcion skim: describe un conjunto de datos
        janitor, # contiene conjuntos de datos
        tidyverse, ## manipular/limpiar conjuntos de datos
@@ -24,7 +24,7 @@ p_load(rio, # funci?n import/export: permite leer/escribir archivos desde difere
 
 ##1. Importar/exportar bases de datos
 
-#1.1 Importe las bases de datos M?dulo de sitio o ubicacion en un objeto llamdo location y Modulo de identificacion en un objeto llamado identification.
+#1.1 Importe las bases de datos Modulo de sitio o ubicacion en un objeto llamdo location y Modulo de identificacion en un objeto llamado identification.
 #Se importan las bases de datos del repositorio problem set 2 y se colocan en la carpeta input, se cargan desde dicha ubicacion usando import de rio
 identification = import(file="input/M?dulo de identificaci?n.dta")
 location = import(file="input/M?dulo de sitio o ubicaci?n.dta")
