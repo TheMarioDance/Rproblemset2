@@ -15,8 +15,8 @@ getwd()
 require(pacman)
 
 
-#uso la función p_load de pacman para instalar/llamar las librerias que se usaran en el problem set
-p_load(rio, # función import/export: permite leer/escribir archivos desde diferentes formatos. 
+#uso la funci?n p_load de pacman para instalar/llamar las librerias que se usaran en el problem set
+p_load(rio, # funci?n import/export: permite leer/escribir archivos desde diferentes formatos. 
        skimr, # funcion skim: describe un conjunto de datos
        janitor, # contiene conjuntos de datos
        tidyverse, ## manipular/limpiar conjuntos de datos
@@ -24,15 +24,15 @@ p_load(rio, # función import/export: permite leer/escribir archivos desde difere
 
 ##1. Importar/exportar bases de datos
 
-#1.1 Importe las bases de datos Módulo de sitio o ubicación en un objeto llamdo location y Módulo de identificación en un objeto llamado identification.
+#1.1 Importe las bases de datos M?dulo de sitio o ubicacion en un objeto llamdo location y Modulo de identificacion en un objeto llamado identification.
 #Se importan las bases de datos del repositorio problem set 2 y se colocan en la carpeta input, se cargan desde dicha ubicacion usando import de rio
-identification = import(file="input/Módulo de identificación.dta")
-location = import(file="input/Módulo de sitio o ubicación.dta")
+identification = import(file="input/M?dulo de identificaci?n.dta")
+location = import(file="input/M?dulo de sitio o ubicaci?n.dta")
 
 ##-----------
 # library(haven)
-# identification <- read_dta("~/GitHub/Rproblemset2/input/Módulo de identificación.dta")
-# location <- read_dta("~/GitHub/Rproblemset2/input/Módulo de sitio o ubicación.dta")
+# identification <- read_dta("~/GitHub/Rproblemset2/input/M?dulo de identificaci?n.dta")
+# location <- read_dta("~/GitHub/Rproblemset2/input/M?dulo de sitio o ubicaci?n.dta")
 ##------------
 
 #1.2 Exporte a la carpeta output los objetos cargados en el punto anterior, guÃ¡rdelos como location.rds y identification.rds.
@@ -42,20 +42,37 @@ export(x=location , file="output/location.rds")
 
 
 ##2. Generar variables.
+
+#Se genera la variable llamada bussiness_type que toma distintos valores dependiendo del valor en la variable grupos de identification.
+#Se realizo utilizando mutate y un case_when (condicional) al haber distintos posibles valores. Vale la pena destacar que la variable Grupos4 estaba en texto (a esto se deben los valores numericos en "")
 identification=mutate(identification,bussiness_type=case_when(identification$GRUPOS4=="01" ~ "Agricultura" ,
                                                    identification$GRUPOS4=="02" ~ "Industria Manufacturera" ,
                                                    identification$GRUPOS4=="03" ~ "Comercio" ,
                                                    identification$GRUPOS4=="04" ~ "Servicios"))
 
+#Se genera la variable grupo_etario que divide a los invividuos por su edad (que se encuentra registrada en la variable P241)
+#En este caso, se dividio en las etapas del ciclo de vida registradas por el Minsterio de Salud y Proteccion Social de Colombia.
+#Se realizo utilizando mutate y un case_when (condicional) al haber distintos posibles valores.
+#Pd: en el caso de la adultez esta se clasifica entre 27 y 59 aÃ±os, decidimos dividir este ciclo en dos para cumplir el requisito de 4 grupos etarios de la variable.
 identification=mutate(identification,grupo_etario=case_when(identification$P241<27 ~ "Jovenes" ,
                                                               identification$P241>=27 & identification$P241<40 ~ "Adultos Jovenes" ,
                                                               identification$P241>=40 & identification$P241<60 ~ "Adultos" ,
                                                               identification$P241>=60 ~ "Adultos Mayores"))
+
+#Sobre el objeto location, genere una variable llamada ambulante, que sera igual a 1 si la variable P3053 es igual a 3, 4 o 5.
+#En este caso se generÃ³ la variable con la funciÃ³n $ y se usÃ³ | como condicional "o".
 location$ambulante = ifelse(test=(location$P3053==3|location$P3053==4|location$P3053==5), yes=1 , no=0)
 
+
+##3. Eliminar filas/columnas de un conjunto de datos.
+
+#Almacene en un objeto llamado identification_sub las variables DIRECTORIO, SECUENCIA_P, SECUENCIA_ENCUESTA, grupo_etario, ambulante, COD_DEPTO y F_EXP.
+#En este caso se elimino el grupo entre area y grupos 12 ya que las variables deseadas se encontraban en los "extremos" de la tabla, vale la pena destacar que en indentification no se tiene la variable ambulante, por lo que no se tuvo en cuenta.
 identification_sub=select(.data=identification,-AREA:-GRUPOS12)
 
-location_sub=select(.data=location,DIRECTORIO,SECUENCIA_P,SECUENCIA_ENCUESTA,ambulante,P3054,COD_DEPTO,F_EXP)
+#Del objeto location seleccione solo las variables DIRECTORIO, SECUENCIA_P, SECUENCIA_ENCUESTA, ambulante P3054, P469, COD_DEPTO, F_EXP y guardelo en nuevo objeto llamado location_sub.
+#Se seleccionaron "a mano" ya que no se encontro un patron para eliminar las variables no deseadas o seleccionar solo las deseadas.
+location_sub=select(.data=location,DIRECTORIO,SECUENCIA_P,SECUENCIA_ENCUESTA,ambulante,P3054,P469,COD_DEPTO,F_EXP)
 
 # 4. Combinar bases de datos
 
@@ -140,7 +157,7 @@ df_adul_jov_dep <- df %>%
   count(COD_DEPTO.x) 
 
 # Histograma de la cantidad de personas con cod_departamento.x 
-# segun las personas jovenes que estén en comercio
+# segun las personas jovenes que estan en comercio
 
 AdultosJovenes_en_Comercio_y_Depto <- rename(.data = df_adul_jov_dep, "Cantidad Personas" = "n")
 
