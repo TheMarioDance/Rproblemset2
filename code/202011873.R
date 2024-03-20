@@ -26,8 +26,8 @@ p_load(rio, # funcion import/export: permite leer/escribir archivos desde difere
 
 #1.1 Importe las bases de datos Modulo de sitio o ubicacion en un objeto llamdo location y Modulo de identificacion en un objeto llamado identification.
 #Se importan las bases de datos del repositorio problem set 2 y se colocan en la carpeta input, se cargan desde dicha ubicacion usando import de rio
-identification = import(file="input/Módulo de identificación.dta")
-location = import(file="input/Módulo de sitio o ubicación.dta")
+identification = import(file="input/Modulo de identificacion.dta")
+location = import(file="input/Modulo de sitio o ubicacion.dta")
 
 
 #1.2 Exporte a la carpeta output los objetos cargados en el punto anterior, guárdelos como location.rds y identification.rds.
