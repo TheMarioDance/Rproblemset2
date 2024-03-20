@@ -1,6 +1,6 @@
 ### Juan Fernando Contreras Garcia & Mariana Baquero Jara
 ### Codigo Uniandes: 202011873 & 202015009
-### Update: 18/03/2024
+### Update: 20/03/2024
 ### R version 4.3.2 (2023-10-31 ucrt)
 
 #Limpiar el environment
@@ -164,3 +164,8 @@ AdultosJovenes_en_Comercio_y_Depto <- rename(.data = df_adul_jov_dep, "Cantidad 
 
 hist(AdultosJovenes_en_Comercio_y_Depto$`Cantidad Personas`)
 
+#El análisis revela que en ciertas regiones hay una mayor cantidad de adultos y adultos jóvenes, 
+#mostrando una clara tendencia en la distribución por edad y ubicación. Estos grupos etarios dominan los datos, 
+#sugiriendo que son más activos o posiblemente tienen más oportunidades en esas áreas específicas. 
+#La variabilidad entre las regiones destaca las diferencias en la composición de la población, 
+#reflejando cómo se distribuyen estos grupos a lo largo del país.
