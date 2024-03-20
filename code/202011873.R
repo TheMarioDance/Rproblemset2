@@ -29,11 +29,6 @@ p_load(rio, # funcion import/export: permite leer/escribir archivos desde difere
 identification = import(file="input/Módulo de identificación.dta")
 location = import(file="input/Módulo de sitio o ubicación.dta")
 
-##-----------
-# library(haven)
-# identification <- read_dta("~/GitHub/Rproblemset2/input/M?dulo de identificaci?n.dta")
-# location <- read_dta("~/GitHub/Rproblemset2/input/M?dulo de sitio o ubicaci?n.dta")
-##------------
 
 #1.2 Exporte a la carpeta output los objetos cargados en el punto anterior, guárdelos como location.rds y identification.rds.
 #Se exportan a la carpeta output en formato rds
