@@ -30,7 +30,7 @@ identification = import(file="input/Modulo de identificacion.dta")
 location = import(file="input/Modulo de sitio o ubicacion.dta")
 
 
-#1.2 Exporte a la carpeta output los objetos cargados en el punto anterior, guárdelos como location.rds y identification.rds.
+#1.2 Exporte a la carpeta output los objetos cargados en el punto anterior, guardelos como location.rds y identification.rds.
 #Se exportan a la carpeta output en formato rds
 export(x=identification , file="output/identification.rds")
 export(x=location , file="output/location.rds")
@@ -48,14 +48,14 @@ identification=mutate(identification,bussiness_type=case_when(identification$GRU
 #Se genera la variable grupo_etario que divide a los invividuos por su edad (que se encuentra registrada en la variable P241)
 #En este caso, se dividio en las etapas del ciclo de vida registradas por el Minsterio de Salud y Proteccion Social de Colombia.
 #Se realizo utilizando mutate y un case_when (condicional) al haber distintos posibles valores.
-#Pd: en el caso de la adultez esta se clasifica entre 27 y 59 años, decidimos dividir este ciclo en dos para cumplir el requisito de 4 grupos etarios de la variable.
+#Pd: en el caso de la adultez esta se clasifica entre 27 y 59 anos, decidimos dividir este ciclo en dos para cumplir el requisito de 4 grupos etarios de la variable.
 identification=mutate(identification,grupo_etario=case_when(identification$P241<27 ~ "Jovenes" ,
                                                               identification$P241>=27 & identification$P241<40 ~ "Adultos Jovenes" ,
                                                               identification$P241>=40 & identification$P241<60 ~ "Adultos" ,
                                                               identification$P241>=60 ~ "Adultos Mayores"))
 
 #Sobre el objeto location, genere una variable llamada ambulante, que sera igual a 1 si la variable P3053 es igual a 3, 4 o 5.
-#En este caso se generó la variable con la función $ y se usó | como condicional "o".
+#En este caso se genera la variable con la funcion $ y se usa | como condicional "o".
 location$ambulante = ifelse(test=(location$P3053==3|location$P3053==4|location$P3053==5), yes=1 , no=0)
 
 
@@ -159,8 +159,9 @@ AdultosJovenes_en_Comercio_y_Depto <- rename(.data = df_adul_jov_dep, "Cantidad 
 
 hist(AdultosJovenes_en_Comercio_y_Depto$`Cantidad Personas`)
 
-#El análisis revela que en ciertas regiones hay una mayor cantidad de adultos y adultos jóvenes, 
-#mostrando una clara tendencia en la distribución por edad y ubicación. Estos grupos etarios dominan los datos, 
-#sugiriendo que son más activos o posiblemente tienen más oportunidades en esas áreas específicas. 
-#La variabilidad entre las regiones destaca las diferencias en la composición de la población, 
-#reflejando cómo se distribuyen estos grupos a lo largo del país.
+#El analisis revela que en ciertas regiones hay una mayor cantidad de adultos y adultos jovenes, 
+#mostrando una clara tendencia en la distribucion por edad y ubicacion. Estos grupos etarios dominan los datos, 
+#sugiriendo que son mas activos o posiblemente tienen mas oportunidades en esas areas especaficas. 
+#La variabilidad entre las regiones destaca las diferencias en la composicion de la poblacion, 
+#reflejando como se distribuyen estos grupos a lo largo del pais.
+
